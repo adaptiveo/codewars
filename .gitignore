@@ -1,0 +1,7 @@
+.idea
+venv
+tests
+.pytest_cache
+__pycache__
+/the_observed_pin/kata_observed_pin_sol2.py
+/the_observed_pin/kata_observed_pin_sol3.py
