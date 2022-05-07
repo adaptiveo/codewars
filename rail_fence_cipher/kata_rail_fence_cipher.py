@@ -26,18 +26,12 @@ def decode_rail_fence_cipher(string: str, n: int) -> str:
     if len(string) == 0:
         return ''
 
-    pas = True
-    if len(string) % (2 * n - 2) > n:
-        pas = False
+    pas = False if len(string) % (2 * n - 2) > n else True
 
     array = list(string)
     p1 = (math.ceil(len(array) / (2 * n - 2)))
     p2 = (math.ceil((len(array) - n + 1) / (2 * n - 2)))
-    mass = []
-    m_s = array[:p1]
-    m_f = array[-p2:]
-    mass.append(m_s)
-    mass.append(m_f)
+    mass = [array[:p1], array[-p2:]]
     m_m = array[p1:-p2]
     mid_rail = n - 2
     for r in range(mid_rail, 0, -1):
@@ -51,9 +45,7 @@ def decode_rail_fence_cipher(string: str, n: int) -> str:
 
     print(mass)
     rail = direction_3(n)
-    new_string = ''
-    for _ in string:
-        new_string += str(mass[next(rail)].pop(0))
+    new_string = ''.join([mass[next(rail)].pop(0) for _ in string])
     return new_string
 
 
