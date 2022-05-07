@@ -22,7 +22,7 @@ def encode_rail_fence_cipher(string: str, n: int) -> str:
     return ''.join([''.join(d) for d in ddd])
 
 
-def decode_rail_fence_cipher(string: str, n: int) -> str:
+def decode_rail_fence_cipher_old(string: str, n: int) -> str:
     if len(string) == 0:
         return ''
 
@@ -47,6 +47,25 @@ def decode_rail_fence_cipher(string: str, n: int) -> str:
     rail = direction_3(n)
     new_string = ''.join([mass[next(rail)].pop(0) for _ in string])
     return new_string
+
+
+def decode_rail_fence_cipher(string: str, n: int) -> str:
+    if len(string) == 0:
+        return ''
+
+    array = list(string)
+
+    print(string)
+    ddd = [[] for i in range(n)]
+    new_string = [0]*len(string)
+    rail = direction_3(n)
+    for i in range(len(string)):
+        ddd[next(rail)].append(i)
+    print(ddd)
+    for dddd in ddd:
+        for ddddd in dddd:
+            new_string[ddddd] = array.pop(0)
+    return ''.join(new_string)
 
 
 # print(encode_rail_fence_cipher("1234567890123456789012345678901234567890",4))
