@@ -1,19 +1,13 @@
 import math
 
 
-def direction_2(n):
-    old_num = -1
-    result = -1
-    i = 0
+def direction_3(n):
+    x,dx = 0,1
     while True:
-        num = (math.cos(math.pi + math.pi * i / (n - 1)) + 1) / n
-        if num > old_num:
-            result += 1
-        else:
-            result -= 1
-        old_num = num
-        i += 1
-        yield result
+        yield x
+        if (x == n-1 and dx == 1) or (x == 0 and dx == -1):
+            dx = -1 * dx
+        x += dx
 
 
 def encode_rail_fence_cipher(string: str, n: int) -> str:
@@ -21,7 +15,7 @@ def encode_rail_fence_cipher(string: str, n: int) -> str:
         return ''
 
     ddd = [[] for i in range(n)]
-    rail = direction_2(n)
+    rail = direction_3(n)
     for i in string:
         ddd[next(rail)].append(i)
     print(ddd)
@@ -56,7 +50,7 @@ def decode_rail_fence_cipher(string: str, n: int) -> str:
             mass.insert(1, m_1)
 
     print(mass)
-    rail = direction_2(n)
+    rail = direction_3(n)
     new_string = ''
     for _ in string:
         new_string += str(mass[next(rail)].pop(0))
