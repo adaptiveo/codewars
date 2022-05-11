@@ -2,12 +2,12 @@ import itertools
 
 
 def direction_3(n):
-    x, dx = 0, 1
+    i, delta = 0, 1
     while True:
-        yield x
-        if (x == n - 1 and dx == 1) or (x == 0 and dx == -1):
-            dx = -1 * dx
-        x += dx
+        yield i
+        if (i == n - 1 and delta == 1) or (i == 0 and delta == -1):
+            delta = -1 * delta
+        i += delta
 
 
 def rail_fence(collection, n):
