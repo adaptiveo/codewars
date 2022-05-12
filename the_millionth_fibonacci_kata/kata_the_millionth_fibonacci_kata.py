@@ -1,4 +1,7 @@
 def multiplicate_matrix(matrix1:list, matrix2:list) -> list:
+    '''
+        multiplicate_matrix - multiplicate two matrix wich represented by lists
+    '''
     res = [[0] * len(matrix2[0]) for j in range(len(matrix2))]
     for i in range(len(matrix1)):
         for j in range(len(matrix2[0])):
