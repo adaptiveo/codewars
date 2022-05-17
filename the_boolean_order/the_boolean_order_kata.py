@@ -1,7 +1,13 @@
 import itertools
-
+import time
 
 operators = ['&', '|', '^']
+forbiden = ['(t)', '(f)', '(&)', '(|)', '(^)', 't(', ')t', 'f(', ')f', ')(']
+combinations = set()
+
+
+def string_is_not_ok(current:str):
+    return len([c for c in forbiden if c in current])
 
 
 def generate_sequince(length:int, l:list, s:str):
@@ -14,6 +20,19 @@ def generate_sequince(length:int, l:list, s:str):
         generate_sequince(length-1, l, s + a[_])
 
 
+def generate_string(predicats:str, brackets:str, candidate:str):
+    if string_is_not_ok(candidate):
+        return
+    if len(predicats)==0:
+        if check_correctiveness(candidate):
+            combinations.add(candidate)
+        return ''
+    else:
+        val1 = generate_string(predicats[1:], brackets, candidate + predicats[:1])
+        if len(brackets)>0:
+            val2 = generate_string(predicats, brackets[1:], candidate + brackets[:1])
+
+
 def check_correctiveness(string:str):
     stack = []
     for c in string:
@@ -21,42 +40,43 @@ def check_correctiveness(string:str):
             return False
         if c == '(':
             stack.append(c)
-        else:
+        elif c == ')':
             stack.pop()
+        else:
+            continue
     if len(stack) > 0:
         return False
     else:
         return True
 
 
-def generate_evaluate_string(predicats:str, brackets:str):
-    result = ''
-    for i in range(len(brackets) - 1):
-        result += brackets[i]
-        if brackets[i] == '(' and brackets[i + 1] == ')':
-            result += predicats[:3]
-            predicats = predicats[3:]
-        elif ( brackets[i] == ')' and brackets[i + 1] == ')' ) or ( brackets[i] == '(' and brackets[i + 1] == '(' ):
-            result += predicats[:2]
-            predicats = predicats[2:]
-        elif brackets[i] == ')' and brackets[i + 1] == '(':
-            result += predicats[:1]
-            predicats = predicats[1:]
-    result += brackets[-1:]
-    return result
-
 def solve(s:str, ops:str):
     brackets = []
     generate_sequince( ( len(s) - 2 ) * 2, brackets, '' )
     string = ''.join([x for t in itertools.zip_longest(s, ops, fillvalue='') for x in t])
     for br in brackets:
-        print(generate_evaluate_string(string, br))
+        print(generate_string(string, br, ''))
+    print(len(combinations))
+    counter = 0
+    for c in combinations:
+        if eval(c.replace('t','True').replace('f','False')):
+            counter +=1
+    return counter
+
+
+
+
+
 
 
 
 
 if __name__ == '__main__':
+    t = time.time()
     solve("ttftff","|&^&&")
-    mass = []
-    generate_sequince(10,mass,'')
-    print(mass)
+    print(time.time() - t)
+    print(combinations)
+    # mass = []
+    # generate_sequince(10,mass,'')
+    # print(mass)
+
