@@ -75,7 +75,7 @@ if __name__ == '__main__':
     t = time.time()
     solve("ttftff","|&^&&")
     print(time.time() - t)
-    print(combinations)
+    print(*combinations,sep="\n")
     # mass = []
     # generate_sequince(10,mass,'')
     # print(mass)
