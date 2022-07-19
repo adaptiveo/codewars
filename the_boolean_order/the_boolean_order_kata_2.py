@@ -1,5 +1,6 @@
 import itertools
 import time
+from typing import Set
 
 s = "ttftff"
 op = "|&^&&"
@@ -7,7 +8,7 @@ matrix = []
 
 operators = ['&', '|', '^']
 forbiden = ['(t)', '(f)', '(&)', '(|)', '(^)', 't(', ')t', 'f(', ')f', ')(']
-combinations = set()
+combinations: Set[list] = set()
 
 def prepare_matrix(s:str):
     matrix = [[0] * len(s) for i in range(len(s))]
